@@ -62,7 +62,11 @@ module Janky
     #
     # Returns a Branch record.
     def branch_for(name)
-      branches.find_or_create_by(name: name)
+      if branch = branches.where(name: name).first
+        branch
+      else
+        branches.create!(name: name)
+      end
     end
 
     # Create or retrieve the given commit.
